@@ -141,15 +141,17 @@ class Viewer:
             self.camera_center = np.mean(np.asarray([i["position"] for i in camera_poses]), axis=0)
         self.camera_poses = camera_poses
 
-    def _get_training_gaussians(self, new_gaussians):
-        # slow and large gpu consumption
-        self.gaussian_model._xyz = new_gaussians._xyz.clone().detach()
-        self.gaussian_model._scaling = new_gaussians._scaling.clone().detach()
-        self.gaussian_model._opacity = new_gaussians._opacity.clone().detach()
-        self.gaussian_model._rotation = new_gaussians._rotation.clone().detach()
-        self.gaussian_model._features_dc = new_gaussians._features_dc.clone().detach()
-        self.gaussian_model._features_rest = new_gaussians._features_rest.clone().detach()
-        self.viewer_renderer = ViewerRenderer(self.gaussian_model, self.background_color, self.is_training)
+    
+    # def _get_training_gaussians(self, new_gaussians):
+    #     # slow and large gpu consumption
+    #     self.gaussian_model._xyz = new_gaussians._xyz.clone().detach()
+    #     self.gaussian_model._scaling = new_gaussians._scaling.clone().detach()
+    #     self.gaussian_model._opacity = new_gaussians._opacity.clone().detach()
+    #     self.gaussian_model._rotation = new_gaussians._rotation.clone().detach()
+    #     self.gaussian_model._features_dc = new_gaussians._features_dc.clone().detach()
+    #     self.gaussian_model._features_rest = new_gaussians._features_rest.clone().detach()
+    #     self.viewer_renderer = ViewerRenderer(self.gaussian_model, self.background_color, self.is_training)
+        
 
     def get_gpu_memory_usage(self):
         total_memory = torch.cuda.memory_allocated() + torch.cuda.memory_reserved() 
